@@ -54,6 +54,9 @@ function watchTitleBarOverlay() {
     document.documentElement.style.setProperty("--window-controls-width", `${controlsWidth}px`);
   };
   controlsOverlay?.addEventListener("geometrychange", reportGeometry);
+  // On Windows, geometrychange can precede the renderer's viewport resize.
+  // Recalculate once innerWidth reflects the new window size as well.
+  window.addEventListener("resize", reportGeometry);
   reportGeometry();
 
   let lastColor = "";
